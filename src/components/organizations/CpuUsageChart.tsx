@@ -12,30 +12,34 @@ export default function CpuUsageChart(props: Props) {
       <Line
         type="natural"
         dataKey="user"
-        stroke="#000"
+        stroke="#ff9b9b"
         isAnimationActive={false}
+        dot={false}
       />
       <Line
         type="natural"
         dataKey="system"
-        stroke="#0ff"
+        stroke="#ffff92"
         isAnimationActive={false}
+        dot={false}
       />
       <Line
         type="natural"
         dataKey="intr"
-        stroke="#0f0"
+        stroke="#a549ff"
         isAnimationActive={false}
+        dot={false}
       />
       <Line
         type="natural"
         dataKey="idle"
-        stroke="#00f"
+        stroke="#53afff"
         isAnimationActive={false}
+        dot={false}
       />
       <CartesianGrid stroke="#ccc" />
-      <XAxis dataKey="time" />
-      <YAxis />
+      <XAxis dataKey="time" stroke="#ccc" />
+      <YAxis stroke="#ccc" />
     </LineChart>
   );
 }
