@@ -13,7 +13,7 @@ interface Props {
 export default function BasicTable(props: Props) {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell align="right">Time</TableCell>
