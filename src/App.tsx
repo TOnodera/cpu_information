@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline, createTheme } from "@mui/material";
-import MainRouter from "./MainRouter";
+import Layout from "./components/layouts/Layout";
+import MainRouter from "./router/MainRouter";
 
 function App() {
   const theme = createTheme({
@@ -11,7 +12,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <MainRouter />
+      <Layout>
+        <MainRouter />
+      </Layout>
     </ThemeProvider>
   );
 }
