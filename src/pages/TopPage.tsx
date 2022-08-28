@@ -18,7 +18,7 @@ export default function TopPage() {
   const stroke = {
     user: "#ff9b9b",
     system: "#ffff92",
-    nice: "#ccc",
+    nice: "#0c0",
     intr: "#a549ff",
     idle: "#53afff",
   };
