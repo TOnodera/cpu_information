@@ -1,23 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import BasicTable from "./components/parts/BasicTable";
 
 function App() {
-  const data = [
-    { name: "page A", uv: 1 },
-    { name: "page B", uv: 1 },
-    { name: "page C", uv: 2 },
-    { name: "page D", uv: 1 },
-    { name: "page E", uv: 4 },
-  ];
+  const [data, setData] = useState([] as CpuInfo[]);
+  const handler = () => {
+    invoke("get_cpu_info").then((cpuInfo) => {
+      setData((data) => {
+        if (data.length > 30) {
+          data.shift();
+        }
+        return [...data, cpuInfo] as CpuInfo[];
+      });
+    });
+  };
+  useEffect(() => {
+    const id = setInterval(() => {
+      handler();
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
   return (
     <div className="container">
-      <LineChart width={400} height={400} data={data}>
-        <Line type="monotone" dataKey="uv" stroke="#000" />
+      <LineChart width={1000} height={400} data={data}>
+        <Line
+          type="natural"
+          dataKey="user"
+          stroke="#000"
+          isAnimationActive={false}
+        />
+        <Line
+          type="natural"
+          dataKey="system"
+          stroke="#0ff"
+          isAnimationActive={false}
+        />
+        <Line
+          type="natural"
+          dataKey="intr"
+          stroke="#0f0"
+          isAnimationActive={false}
+        />
+        <Line
+          type="natural"
+          dataKey="idle"
+          stroke="#00f"
+          isAnimationActive={false}
+        />
         <CartesianGrid stroke="#ccc" />
-        <XAxis dataKey="name" />
-        <YAxis />
+        <XAxis dataKey="time" />
+        <YAxis max={100} />
       </LineChart>
+      <BasicTable rows={data.slice().reverse()} />
     </div>
   );
 }
