@@ -41,14 +41,26 @@ export default function TopPage() {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} textAlign="center">
-          <h2>Cpu Usage</h2>
+        <Grid container spacing={2}>
+          <Grid item xs={12} textAlign="center">
+            <h2>Cpu Usage</h2>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CpuUsageChart
+              data={data}
+              width={500}
+              height={500}
+              stroke={stroke}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <CpuUsageTable data={data} stroke={stroke} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <CpuUsageChart data={data} width={500} height={500} stroke={stroke} />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <CpuUsageTable data={data} stroke={stroke} />
+        <Grid container spacing={12}>
+          <Grid item xs={12} textAlign="center">
+            <h2>Memory Usage</h2>
+          </Grid>
         </Grid>
       </Grid>
     </>
