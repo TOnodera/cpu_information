@@ -15,23 +15,21 @@ impl CpuInfo {
     }
 
     pub fn get_cpu_info(self) -> Result<Cpu, ApplicationError> {
-        match self.sys.cpu_load_aggregate() {
-            Ok(cpu) => {
+        self.sys
+            .cpu_load_aggregate()
+            .and_then(|cpu_load| {
                 thread::sleep(Duration::from_secs(1));
-                let cpu = cpu.done().expect("loading cpu info failure.");
-
-                let cpu_info = Cpu {
+                let cpu = cpu_load.done()?;
+                Ok(Cpu {
                     time: chrono::Local::now().format("%H:%M:%S").to_string(),
                     user: cpu.user * 100.0,
                     nice: cpu.nice * 100.0,
                     system: cpu.system * 100.0,
                     intr: cpu.interrupt * 100.0,
                     idle: cpu.idle * 100.0,
-                };
-                Ok(cpu_info)
-            }
-            Err(e) => Err(ApplicationError::CpuError(e)),
-        }
+                })
+            })
+            .map_err(|e| ApplicationError::CpuError(e))
     }
 }
 
