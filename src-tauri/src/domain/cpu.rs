@@ -1,9 +1,10 @@
+use crate::errors::errors::ApplicationError;
+use anyhow::Result;
 use chrono::{self};
 use serde::{Deserialize, Serialize};
 use std::thread;
 use std::time::Duration;
 use systemstat::{platform::windows::PlatformImpl, Platform, System};
-
 pub struct CpuInfo {
     sys: PlatformImpl,
 }
@@ -13,7 +14,7 @@ impl CpuInfo {
         CpuInfo { sys: System::new() }
     }
 
-    pub fn get_cpu_info(self) -> Result<Cpu, String> {
+    pub fn get_cpu_info(self) -> Result<Cpu, ApplicationError> {
         match self.sys.cpu_load_aggregate() {
             Ok(cpu) => {
                 thread::sleep(Duration::from_secs(1));
@@ -29,7 +30,7 @@ impl CpuInfo {
                 };
                 Ok(cpu_info)
             }
-            Err(x) => Err(format!("\nCPU load: error: {}", x)),
+            Err(e) => Err(ApplicationError::CpuError(e)),
         }
     }
 }
@@ -52,7 +53,7 @@ pub struct LoadAvarage {
 }
 
 #[tauri::command]
-pub async fn get_cpu_info() -> Result<Cpu, String> {
+pub async fn get_cpu_info() -> Result<Cpu, ApplicationError> {
     let cpu_info = CpuInfo::new();
     cpu_info.get_cpu_info()
 }

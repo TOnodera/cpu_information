@@ -4,6 +4,7 @@
 )]
 
 mod domain;
+mod errors;
 
 fn main() {
     tauri::Builder::default()

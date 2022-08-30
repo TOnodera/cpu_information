@@ -391,12 +391,14 @@ dependencies = [
 name = "cpu-information"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
  "chrono",
  "serde",
  "serde_json",
  "systemstat",
  "tauri",
  "tauri-build",
+ "thiserror",
 ]
 
 [[package]]
