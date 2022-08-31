@@ -59,23 +59,28 @@ export default function TopPage() {
 
   // rust側からロードアベレージを取得する
   const loadAverageHandler = () => {
-    invoke("get_load_average")
-      .then((loadAverage) => {
-        setLoadAverageData((data) => {
-          console.log(data, loadAverage);
-          if (data.length > timeSpan) {
-            data.shift();
-          }
-          return [...data, loadAverage] as LoadAverage[];
-        });
-      })
-      .catch((e) => console.log(e));
+    invoke("get_load_average").then((loadAverage) => {
+      setLoadAverageData((data) => {
+        if (data.length > timeSpan) {
+          data.shift();
+        }
+        return [...data, loadAverage] as LoadAverage[];
+      });
+    });
+  };
+
+  // rust側からネットワーク使用状況を取得する
+  const networkUsageHandler = () => {
+    invoke("get_network_info").then((networkInfo) => {
+      console.log(networkInfo);
+    });
   };
 
   const handler = () => {
     cpuUsageHandler();
     memoryUsageHandler();
-    loadAverageHandler();
+    // loadAverageHandler();
+    // networkUsageHandler();
   };
 
   useInterval({ interval, handler });
@@ -99,19 +104,6 @@ export default function TopPage() {
               height={400}
               stroke={memoryStroke}
             />
-          </Grid>
-        </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <LoadAverageChart
-              data={loadAverageData}
-              width={400}
-              height={400}
-              stroke={loadAverageStroke}
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <CpuUsageTable data={cpuData} stroke={cpuStroke} />
           </Grid>
         </Grid>
       </Grid>

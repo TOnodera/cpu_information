@@ -12,6 +12,7 @@ fn main() {
             domain::system::get_cpu_info,
             domain::system::get_memory_info,
             domain::system::get_load_average,
+            domain::system::get_network_info
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

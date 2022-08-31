@@ -57,13 +57,7 @@ export default function CpuUsageChart(props: Props) {
             isAnimationActive={false}
             dot={false}
           />
-          <Line
-            type="natural"
-            dataKey="idle"
-            stroke={props.stroke.idle}
-            isAnimationActive={false}
-            dot={false}
-          />
+
           <CartesianGrid stroke="#ccc" />
           <XAxis dataKey="time" stroke="#ccc" />
           <YAxis stroke="#ccc" />

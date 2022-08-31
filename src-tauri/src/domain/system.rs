@@ -60,6 +60,28 @@ impl SystemInfo {
             })
             .map_err(|e| ApplicationError::Error(e))
     }
+
+    pub fn get_network_info(self) -> Result<Vec<NetworkInfo>, ApplicationError> {
+        match self.sys.networks() {
+            Ok(netifs) => {
+                let mut results: Vec<NetworkInfo> = vec![];
+                for netif in netifs.values() {
+                    let stats = self.sys.network_stats(&netif.name)?;
+                    results.push(NetworkInfo {
+                        name: netif.name.clone(),
+                        rx_bytes: stats.rx_bytes.to_string(),
+                        tx_bytes: stats.tx_bytes.to_string(),
+                        rx_packets: stats.rx_packets,
+                        tx_packets: stats.tx_packets,
+                        rx_error: stats.rx_errors,
+                        tx_error: stats.tx_errors,
+                    });
+                }
+                Ok(results)
+            }
+            Err(e) => Err(ApplicationError::Error(e)),
+        }
+    }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -86,6 +108,17 @@ pub struct LoadAverage {
     fifteen: f32,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct NetworkInfo {
+    name: String,
+    rx_bytes: String,
+    tx_bytes: String,
+    rx_packets: u64,
+    tx_packets: u64,
+    rx_error: u64,
+    tx_error: u64,
+}
+
 #[tauri::command]
 pub async fn get_cpu_info() -> Result<Cpu, ApplicationError> {
     let system_info = SystemInfo::new();
@@ -102,4 +135,10 @@ pub fn get_memory_info() -> Result<Memory, ApplicationError> {
 pub fn get_load_average() -> Result<LoadAverage, ApplicationError> {
     let system_info = SystemInfo::new();
     system_info.get_load_average()
+}
+
+#[tauri::command]
+pub fn get_network_info() -> Result<Vec<NetworkInfo>, ApplicationError> {
+    let system_info = SystemInfo::new();
+    system_info.get_network_info()
 }
