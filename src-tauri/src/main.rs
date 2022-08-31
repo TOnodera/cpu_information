@@ -8,7 +8,10 @@ mod errors;
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![domain::system::get_cpu_info])
+        .invoke_handler(tauri::generate_handler![
+            domain::system::get_cpu_info,
+            domain::system::get_memory_info
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

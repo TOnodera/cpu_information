@@ -3,7 +3,7 @@ use thiserror::Error;
 #[derive(Error, Debug)]
 pub enum ApplicationError {
     #[error(transparent)]
-    CpuError(#[from] std::io::Error),
+    Error(#[from] std::io::Error),
 }
 
 impl serde::Serialize for ApplicationError {

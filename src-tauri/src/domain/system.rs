@@ -4,7 +4,7 @@ use chrono::{self};
 use serde::{Deserialize, Serialize};
 use std::thread;
 use std::time::Duration;
-use systemstat::{platform::windows::PlatformImpl, Platform, System};
+use systemstat::{platform::windows::PlatformImpl, ByteSize, Platform, System};
 pub struct SystemInfo {
     sys: PlatformImpl,
 }
@@ -29,7 +29,20 @@ impl SystemInfo {
                     idle: cpu.idle * 100.0,
                 })
             })
-            .map_err(|e| ApplicationError::CpuError(e))
+            .map_err(|e| ApplicationError::Error(e))
+    }
+
+    pub fn get_memory_info(self) -> Result<Memory, ApplicationError> {
+        self.sys
+            .memory()
+            .and_then(|m| {
+                Ok(Memory {
+                    usage: (m.total.as_u64() as f64 - m.free.as_u64() as f64)
+                        / m.total.as_u64() as f64
+                        * 100.0,
+                })
+            })
+            .map_err(|e| ApplicationError::Error(e))
     }
 }
 
@@ -44,6 +57,11 @@ pub struct Cpu {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct Memory {
+    usage: f64,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct LoadAvarage {
     one: f32,
     five: f32,
@@ -52,8 +70,14 @@ pub struct LoadAvarage {
 
 #[tauri::command]
 pub async fn get_cpu_info() -> Result<Cpu, ApplicationError> {
-    let cpu_info = SystemInfo::new();
-    cpu_info.get_cpu_info()
+    let system_info = SystemInfo::new();
+    system_info.get_cpu_info()
+}
+
+#[tauri::command]
+pub async fn get_memory_info() -> Result<Memory, ApplicationError> {
+    let system_info = SystemInfo::new();
+    system_info.get_memory_info()
 }
 
 // #[tauri::command]

@@ -6,3 +6,7 @@ interface CpuInfo {
   intr: number;
   idle: number;
 }
+
+interface MemoryInfo {
+  usage: number;
+}
