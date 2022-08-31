@@ -10,57 +10,40 @@ import {
 import style from "./style.module.scss";
 
 interface Props {
-  data: CpuInfo[];
+  data: LoadAverage[];
   width: number;
   height: number;
   stroke: {
-    user: string;
-    nice: string;
-    system: string;
-    intr: string;
-    idle: string;
+    one: string;
+    five: string;
+    fifteen: string;
   };
 }
 
-export default function CpuUsageChart(props: Props) {
+export default function LoadAverageChart(props: Props) {
   return (
     <div>
-      <h2 className={style.title}>CPU使用率</h2>
+      <h2 className={style.title}>LoadAverage</h2>
       <ResponsiveContainer width="100%" aspect={2}>
         <LineChart width={props.width} height={props.height} data={props.data}>
           <Line
             type="natural"
-            dataKey="user"
-            stroke={props.stroke.user}
+            dataKey="one"
+            stroke={props.stroke.one}
             isAnimationActive={false}
             dot={false}
           />
           <Line
             type="natural"
-            dataKey="nice"
-            stroke={props.stroke.nice}
-            isAnimationActive={false}
-            dot={false}
-          />
-
-          <Line
-            type="natural"
-            dataKey="system"
-            stroke={props.stroke.system}
+            dataKey="five"
+            stroke={props.stroke.five}
             isAnimationActive={false}
             dot={false}
           />
           <Line
             type="natural"
-            dataKey="intr"
-            stroke={props.stroke.intr}
-            isAnimationActive={false}
-            dot={false}
-          />
-          <Line
-            type="natural"
-            dataKey="idle"
-            stroke={props.stroke.idle}
+            dataKey="fifteen"
+            stroke={props.stroke.fifteen}
             isAnimationActive={false}
             dot={false}
           />

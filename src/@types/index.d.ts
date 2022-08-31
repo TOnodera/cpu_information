@@ -8,5 +8,13 @@ interface CpuInfo {
 }
 
 interface MemoryInfo {
+  time: string;
   usage: number;
+}
+
+interface LoadAverage {
+  time: string;
+  one: number;
+  five: number;
+  fifteen: number;
 }

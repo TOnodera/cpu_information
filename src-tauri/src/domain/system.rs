@@ -4,7 +4,7 @@ use chrono::{self};
 use serde::{Deserialize, Serialize};
 use std::thread;
 use std::time::Duration;
-use systemstat::{platform::windows::PlatformImpl, ByteSize, Platform, System};
+use systemstat::{platform::windows::PlatformImpl, Platform, System};
 pub struct SystemInfo {
     sys: PlatformImpl,
 }
@@ -40,6 +40,22 @@ impl SystemInfo {
                     usage: (m.total.as_u64() as f64 - m.free.as_u64() as f64)
                         / m.total.as_u64() as f64
                         * 100.0,
+                    time: chrono::Local::now().format("%H:%M:%S").to_string(),
+                })
+            })
+            .map_err(|e| ApplicationError::Error(e))
+    }
+
+    pub fn get_load_average(self) -> Result<LoadAverage, ApplicationError> {
+        self.sys
+            .load_average()
+            .and_then(|avg| {
+                println!("{:?}", avg);
+                Ok(LoadAverage {
+                    time: chrono::Local::now().format("%H:%M:%S").to_string(),
+                    one: avg.one,
+                    five: avg.five,
+                    fifteen: avg.fifteen,
                 })
             })
             .map_err(|e| ApplicationError::Error(e))
@@ -58,11 +74,13 @@ pub struct Cpu {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Memory {
+    time: String,
     usage: f64,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct LoadAvarage {
+pub struct LoadAverage {
+    time: String,
     one: f32,
     five: f32,
     fifteen: f32,
@@ -75,10 +93,13 @@ pub async fn get_cpu_info() -> Result<Cpu, ApplicationError> {
 }
 
 #[tauri::command]
-pub async fn get_memory_info() -> Result<Memory, ApplicationError> {
+pub fn get_memory_info() -> Result<Memory, ApplicationError> {
     let system_info = SystemInfo::new();
     system_info.get_memory_info()
 }
 
-// #[tauri::command]
-// pub async fn get_load_avarage() -> Result<LoadAvarage, Error> {}
+#[tauri::command]
+pub fn get_load_average() -> Result<LoadAverage, ApplicationError> {
+    let system_info = SystemInfo::new();
+    system_info.get_load_average()
+}
