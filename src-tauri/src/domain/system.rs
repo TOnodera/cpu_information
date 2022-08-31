@@ -5,13 +5,13 @@ use serde::{Deserialize, Serialize};
 use std::thread;
 use std::time::Duration;
 use systemstat::{platform::windows::PlatformImpl, Platform, System};
-pub struct CpuInfo {
+pub struct SystemInfo {
     sys: PlatformImpl,
 }
 
-impl CpuInfo {
+impl SystemInfo {
     pub fn new() -> Self {
-        CpuInfo { sys: System::new() }
+        Self { sys: System::new() }
     }
 
     pub fn get_cpu_info(self) -> Result<Cpu, ApplicationError> {
@@ -52,7 +52,7 @@ pub struct LoadAvarage {
 
 #[tauri::command]
 pub async fn get_cpu_info() -> Result<Cpu, ApplicationError> {
-    let cpu_info = CpuInfo::new();
+    let cpu_info = SystemInfo::new();
     cpu_info.get_cpu_info()
 }
 
