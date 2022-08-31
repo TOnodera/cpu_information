@@ -2,6 +2,7 @@ import { ThemeProvider } from "@emotion/react";
 import { CssBaseline, createTheme } from "@mui/material";
 import Layout from "./components/layouts/Layout";
 import MainRouter from "./router/MainRouter";
+import Titlebar from "./window/titlebar/Titlebar";
 
 function App() {
   const theme = createTheme({
@@ -12,6 +13,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <Titlebar />
       <Layout>
         <MainRouter />
       </Layout>
