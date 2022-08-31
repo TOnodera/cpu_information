@@ -42,9 +42,6 @@ export default function TopPage() {
     <>
       <Grid container spacing={2}>
         <Grid container spacing={2}>
-          <Grid item xs={12} textAlign="center">
-            <h2>Cpu Usage</h2>
-          </Grid>
           <Grid item xs={12} md={6}>
             <CpuUsageChart
               data={data}
@@ -59,7 +56,7 @@ export default function TopPage() {
         </Grid>
         <Grid container spacing={12}>
           <Grid item xs={12} textAlign="center">
-            <h2>Memory Usage</h2>
+            <h2>メモリ使用率</h2>
           </Grid>
         </Grid>
       </Grid>
