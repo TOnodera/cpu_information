@@ -1,15 +1,7 @@
-import {
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useState } from "react";
-import CpuUsageChart from "../components/organizations/CpuUsageChart";
+import CpuUsageChart from "../components/organizations/cpu-usage-chart/CpuUsageChart";
 import CpuUsageTable from "../components/parts/CpuUsageTable";
 import useInterval from "../hooks/UseInterval";
 
