@@ -7,7 +7,9 @@ import Titlebar from "./window/titlebar/Titlebar";
 function App() {
   const theme = createTheme({
     palette: {
-      mode: "dark",
+      background: {
+        default: "#505050",
+      },
     },
   });
   return (

@@ -55,8 +55,8 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 400,
-        "resizable": true,
+        "height": 350,
+        "resizable": false,
         "title": "cpu-information",
         "width": 1000,
         "decorations": false,

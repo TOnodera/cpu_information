@@ -33,9 +33,9 @@ export default function MemoryUsageChart(props: Props) {
             dot={false}
           />
 
-          <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="time" stroke="#ccc" />
-          <YAxis stroke="#ccc" />
+          <CartesianGrid stroke="#5bbec3" />
+          <XAxis stroke="#5bbec3" />
+          <YAxis stroke="#5bbec3" />
         </LineChart>
       </ResponsiveContainer>
     </div>

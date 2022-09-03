@@ -11,15 +11,15 @@ export default function TopPage() {
   const interval = 1000;
   const timeSpan = 30;
   const cpuStroke = {
-    user: "#ff9b9b",
-    system: "#ffff92",
+    user: "#c0cefb",
+    system: "#94ff95",
     nice: "#0c0",
     intr: "#a549ff",
     idle: "#53afff",
   };
 
   const memoryStroke = {
-    total: "#ff9b9b",
+    total: "#c0cefb",
     free: "#ffff92",
   };
 
