@@ -1,5 +1,6 @@
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -34,7 +35,8 @@ export default function MemoryUsageChart(props: Props) {
           />
 
           <CartesianGrid stroke="#5bbec3" />
-          <XAxis stroke="#5bbec3" />
+          <Legend verticalAlign="top" height={36} />
+          <XAxis dataKey="time" stroke="#5bbec3" />
           <YAxis stroke="#5bbec3" />
         </LineChart>
       </ResponsiveContainer>

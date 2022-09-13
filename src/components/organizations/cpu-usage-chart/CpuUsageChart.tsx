@@ -1,5 +1,6 @@
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -59,6 +60,7 @@ export default function CpuUsageChart(props: Props) {
           />
 
           <CartesianGrid className={style.gridStroke} />
+          <Legend verticalAlign="top" height={36} />
           <XAxis dataKey="time" stroke="#5bbec3" />
           <YAxis stroke="#5bbec3" />
         </LineChart>
