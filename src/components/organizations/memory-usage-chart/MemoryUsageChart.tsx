@@ -23,7 +23,7 @@ interface Props {
 export default function MemoryUsageChart(props: Props) {
   return (
     <div>
-      <h2 className={style.title}>メモリ使用率</h2>
+      <h2 className={style.title}>Memory Utilization</h2>
       <ResponsiveContainer width="100%" aspect={2}>
         <LineChart width={props.width} height={props.height} data={props.data}>
           <Line
@@ -35,7 +35,7 @@ export default function MemoryUsageChart(props: Props) {
           />
 
           <CartesianGrid stroke="#5bbec3" />
-          <Legend verticalAlign="top" height={36} />
+          <Legend verticalAlign="bottom" height={36} />
           <XAxis dataKey="time" stroke="#5bbec3" />
           <YAxis stroke="#5bbec3" />
         </LineChart>
